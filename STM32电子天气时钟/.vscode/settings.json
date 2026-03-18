@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "sys.h": "c",
+        "led.h": "c",
+        "delay.h": "c",
+        "stm32f10x.h": "c",
+        "tm1640.h": "c",
+        "lm75a.h": "c",
+        "rtc.h": "c",
+        "buzzer.h": "c",
+        "math.h": "c",
+        "usart.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
+}

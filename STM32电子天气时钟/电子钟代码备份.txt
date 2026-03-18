@@ -1,0 +1,50 @@
+switch (readInput)
+        {
+        case TOUCH_KEY_A:
+        case TOUCH_KEY_B:
+            while ((!GPIO_ReadInputDataBit(TOUCH_KEYPORT, readInput)) && pressTime < KEYA_SPEED1)
+            { //循环判断长按，到时跳转
+                pressTime++;
+                delay_ms(10); //长按判断的计时
+            }
+            int8_t change = (readInput == TOUCH_KEY_A) ? 1 : -1;
+            if (pressTime >= KEYA_SPEED1)
+            { //长键处理
+                while (!GPIO_ReadInputDataBit(TOUCH_KEYPORT, readInput))
+                {
+                    (*data) += change;
+                    showDate();
+                    delay_ms(100);
+                }
+            }
+            else
+            { //单击处理
+                (*data) += change;
+                showDate();
+            }
+            i = 99;
+            break;
+        case TOUCH_KEY_C:
+            switch (digit)
+            {
+            case 0:
+                digit = 2;
+                data = (u16 *)&rmon;
+                break;
+            case 2:
+                digit = 4;
+                data = (u16 *)&rday;
+                break;
+            case 4:
+                digit = 0;
+                data = &ryear;
+                break;
+            }
+            setDate(digit, data);
+            break;
+        case TOUCH_KEY_D:
+            runDate();
+            break;
+        default:
+            break;
+        }
